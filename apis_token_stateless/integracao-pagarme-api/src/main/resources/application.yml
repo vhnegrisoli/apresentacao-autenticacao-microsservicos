@@ -1,0 +1,53 @@
+server:
+  port: 8098
+
+spring:
+  main:
+    allow-bean-definition-overriding: true
+
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/integracao-pagarme
+    username: postgres
+    password: 1y5h8j
+    initialization-mode: always
+    initialize: true
+    continue-on-error: true
+    platform: postgresql
+    maxActive: 3
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+      format_sql: true
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQL9Dialect
+        jdbc:
+          lob.non_contextual_creation: true
+
+app-config:
+  name: integracao-pagarme-api
+  version: 1.0.0
+  description: API de integração com o serviço de pagamentos da Pagar.me
+  url: http://localhost:8098/
+
+  schedulers:
+    transacoes:
+      atualizar-transacoes-cada-20-minutos: "0 0/20 * * * *"
+
+pagarme:
+  api_keys:
+    teste: teste
+    producao: teste
+  base-uri: https://api.pagar.me/1
+  transacoes:
+    uri: ${pagarme.base-uri}/transactions
+  cartoes:
+    uri: ${pagarme.base-uri}/cards
+  estornos:
+    uri: ${pagarme.base-uri}/refunds
+
+jwt:
+  secret: Y2FkZWlyYS1saXZyZS11c3VhcmlvLWFwaS1kZXNlbnZvbHZpbWVudG8=

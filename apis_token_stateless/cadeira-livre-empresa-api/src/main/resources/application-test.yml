@@ -1,0 +1,26 @@
+app-config:
+  nome: CadeiraLivreEmpresaApi
+  enable-rabbit: false
+
+spring:
+  jpa:
+    database: HSQL
+    show-sql: true
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.HSQLDialect
+
+  datasource:
+    url:
+    jdbcUrl: jdbc:hsqldb:mem:cadeiralivreempresa
+    username: sa
+    password:
+    driverClassName: org.hsqldb.jdbc.JDBCDriver
+
+  flyway:
+    enabled: false
+
+jwt:
+  secret: Y2FkZWlyYS1saXZyZS11c3VhcmlvLWFwaS10ZXN0ZQ==

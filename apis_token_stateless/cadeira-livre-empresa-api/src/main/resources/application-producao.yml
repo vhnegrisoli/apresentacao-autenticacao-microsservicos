@@ -1,0 +1,55 @@
+spring:
+
+  rabbitmq:
+    host: ${RABBIT_MQ_HOST}
+    username: ${RABBIT_MQ_USER}
+    password: ${RABBIT_MQ_PASSWORD}
+    virtual-host: ${RABBIT_MQ_USER}
+
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    jdbc-url: ${DATABASE_HOST}
+    username: ${DATABASE_USER}
+    password: ${DATABASE_PASSWORD}
+    initialization-mode: always
+    initialize: true
+    continue-on-error: true
+    platform: postgresql
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+      format_sql: true
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQL9Dialect
+        jdbc:
+          lob.non_contextual_creation: true
+
+  redis:
+    host: ${REDIS_HOST}
+    port: ${REDIS_PORT}
+    password: ${REDIS_PASSWORD}
+    user: ${REDIS_USER}
+    pool:
+      max-active: 120
+      max-idle: 40
+
+app-config:
+
+  services:
+    integracao-pagarme:
+      transacao:
+        url: ${INTEGRACAO_PAGARME_BASE_URI}
+
+server:
+  port: 8095
+
+management:
+  health:
+    rabbit:
+      enabled: false
+
+jwt:
+  secret: ${JWT_SECRET}

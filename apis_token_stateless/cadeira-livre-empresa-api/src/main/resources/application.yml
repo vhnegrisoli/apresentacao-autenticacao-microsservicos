@@ -1,0 +1,100 @@
+spring:
+  main:
+    allow-bean-definition-overriding: true
+
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: biotadmin
+    password: biotadmin
+
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/cadeira_livre_empresa
+    # url: jdbc:postgresql://sqlvhnegrisoli.ddns.net:5432/cadeira_livre_empresa
+    username: postgres
+    password: 1y5h8j
+    initialization-mode: always
+    initialize: true
+    continue-on-error: true
+    platform: postgresql
+
+  jackson:
+    time-zone: America/Sao_Paulo
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+      format_sql: true
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQL9Dialect
+        jdbc:
+          lob.non_contextual_creation: true
+
+  redis:
+    host: localhost
+    port: 6379
+    pool:
+      max-active: 120
+      max-idle: 40
+
+  flyway:
+    enabled: true
+    out-of-order: true
+    baseline-on-migrate: true
+    ignore-missing-migrations: true
+
+oauth-clients:
+  cadeira-livre-empresa-api:
+    client: cadeira-livre-empresa-api-client
+    secret: cadeira-livre-empresa-api-secret
+
+server:
+  port: 8095
+
+app-config:
+
+  queue:
+    enviar-notificacao: enviar-notificacao.queue
+    autenticar-usuario: autenticar-usuario.queue
+    deslogar-usuario: deslogar-usuario.queue
+    reservar-cadeira-livre: reservar-cadeira-livre.queue
+
+  topic:
+    biot-admin: biot-admin.topic
+
+  key:
+    enviar-notificacao: enviar-notificacao.queue
+    autenticar-usuario: autenticar-usuario.queue
+    deslogar-usuario: deslogar-usuario.queue
+    reservar-cadeira-livre: reservar-cadeira-livre.queue
+
+  firebase:
+    token: 123
+    bundleId: br.com.biot.maisdietaclube
+
+  scheduler:
+    every-minute: 0 0/1 * * * *
+    every-5-minutes: 0 0/5 * * * *
+    every-20-minutes: 0 0/20 * * * *
+
+  services:
+    integracao-pagarme:
+      transacao:
+        url: http://localhost:8098/api/transacao
+
+    viacep:
+      url: https://viacep.com.br/ws
+
+    ibge-localidade:
+      url: https://servicodados.ibge.gov.br/api/v1/localidades/estados
+
+management:
+  health:
+    rabbit:
+      enabled: true
+
+jwt:
+  secret: Y2FkZWlyYS1saXZyZS11c3VhcmlvLWFwaS1kZXNlbnZvbHZpbWVudG8=

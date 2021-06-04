@@ -1,0 +1,39 @@
+{
+  "name": "cadeira-livre-cliente-api",
+  "version": "1.0.0",
+  "main": "app.js",
+  "license": "MIT",
+  "scripts": {
+    "startLocal": "set NODE_ENV=development&& nodemon app.js",
+    "start": "set NODE_ENV=production&& sucrase-node app.js",
+    "startContainer": "set NODE_ENV=container&& sucrase-node app.js",
+    "heroku-prebuild": "rm -rf node_modules && rm -rf yarn.lock && yarn",
+    "test": "jest"
+  },
+  "jest": {
+    "transform": {
+      ".(js|jsx|ts|tsx)": "@sucrase/jest-plugin"
+    }
+  },
+  "dependencies": {
+    "amqplib": "^0.6.0",
+    "axios": "^0.21.0",
+    "bcrypt": "^5.0.0",
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.10.17",
+    "nodemon": "^2.0.6",
+    "sucrase": "^3.16.0",
+    "swagger-ui-express": "^4.1.6",
+    "uuid": "^8.3.1",
+    "validar-cpf": "^2.1.2"
+  },
+  "devDependencies": {
+    "@sucrase/jest-plugin": "^2.0.0",
+    "jest": "^26.6.3",
+    "nodemon": "^2.0.6",
+    "sucrase": "^3.16.0"
+  }
+}

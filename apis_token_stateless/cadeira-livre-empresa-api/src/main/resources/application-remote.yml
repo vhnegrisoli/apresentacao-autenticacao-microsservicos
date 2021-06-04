@@ -1,0 +1,67 @@
+spring:
+  main:
+    allow-bean-definition-overriding: true
+
+  rabbitmq:
+    host: sqlvhnegrisoli.ddns.net
+    port: 5672
+    username: biotadmin
+    password: biotadmin
+
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://sqlvhnegrisoli.ddns.net:5432/cadeira_livre_empresa
+    username: postgres
+    password: 1y5h8j
+    initialization-mode: always
+    initialize: true
+    continue-on-error: true
+    platform: postgresql
+
+  jackson:
+    time-zone: America/Sao_Paulo
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+      format_sql: true
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQL9Dialect
+        jdbc:
+          lob.non_contextual_creation: true
+
+  redis:
+    host: sqlvhnegrisoli.ddns.net
+    port: 6379
+    pool:
+      max-active: 120
+      max-idle: 40
+
+oauth-clients:
+  cadeira-livre-empresa-api:
+    client: cadeira-livre-empresa-api-client
+    secret: cadeira-livre-empresa-api-secret
+
+server:
+  port: 8095
+
+app-config:
+  queue:
+    usuario-cadeira-livre-empresa-cadastro: usuario-cadeira-livre-empresa-cadastro.queue
+    enviar-notificacao: enviar-notificacao.queue
+  topic:
+    biot-admin: biot-admin.topic
+  key:
+    usuario-cadeira-livre-empresa-cadastro: usuario-cadeira-livre-empresa-cadastro.queue
+    enviar-notificacao: enviar-notificacao.queue
+
+  firebase:
+    token: AAAAVbf7NBs:APA91bFrjTq4YN1YTLnXt79qkceKd01__afou2U7nkg5yZftEWpYToU8KWvKMfPtIgknDUvAtvF0hnIV6x59xAnwmZUFIQfZR3aQ5bDrP6IqV51bPSbGIrTocHcWdCuyxqolpOBkp99h
+    bundleId: br.com.biot.maisdietaclube
+
+management:
+  health:
+    rabbit:
+      enabled: true

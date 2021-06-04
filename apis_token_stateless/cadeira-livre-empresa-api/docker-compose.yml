@@ -1,0 +1,70 @@
+version: "3.0"
+services:
+
+  cadeira-livre-db:
+    image: postgres:11
+    container_name: cadeira-livre-db
+    restart: always
+    environment:
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_USER=admin
+      - POSTGRES_DB=cadeira-livre
+    networks:
+      - cadeira-livre-network
+    ports:
+      - '5432:5432'
+
+  cadeira-livre-api:
+    build: './'
+    container_name: cadeira-livre-api
+    ports:
+      - '8095:8095'
+    networks:
+      - cadeira-livre-network
+    depends_on:
+      - cadeira-livre-db
+      - cadeira-livre-rabbit
+      - cadeira-livre-redis
+    environment:
+      - SPRING_PROFILES_ACTIVE=container
+      - DATABASE_HOST=cadeira-livre-db
+      - DATABASE_PORT=5432
+      - DATABASE_NAME=cadeira-livre
+      - DATABASE_USER=admin
+      - DATABASE_PASSWORD=admin
+      - RABBIT_MQ_HOST=cadeira-livre-rabbit
+      - RABBIT_MQ_USER=admin
+      - RABBIT_MQ_PASSWORD=admin
+      - RABBIT_MQ_PORT=5672
+      - REDIS_HOST=cadeira-livre-redis
+      - REDIS_PORT=6379
+      - JWT_SECRET=Y2FkZWlyYS1saXZyZS11c3VhcmlvLWFwaS1kb2NrZXI=
+
+  cadeira-livre-rabbit:
+    image: rabbitmq:3-management
+    container_name: cadeira-livre-rabbit
+    hostname: cadeira-livre-rabbit
+    networks:
+      - cadeira-livre-network
+    ports:
+      - '5672:5672'
+      - '25676:25676'
+      - '8082:15672'
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=admin
+      - RABBITMQ_DEFAULT_VHOST=cadeira_livre_rabbit_host
+
+  cadeira-livre-redis:
+    image: redis
+    container_name: cadeira-livre-redis
+    networks:
+      - cadeira-livre-network
+    command: "redis-server"
+    ports:
+      - '6379:6379'
+    environment:
+      - REDIS_REPLICATION_MODE=master
+
+networks:
+  cadeira-livre-network:

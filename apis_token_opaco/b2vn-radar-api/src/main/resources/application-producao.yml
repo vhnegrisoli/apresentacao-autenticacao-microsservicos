@@ -1,0 +1,57 @@
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    jdbc-url: jdbc:postgresql://ec2-107-21-94-185.compute-1.amazonaws.com:5432/d8s7gh8deheskt
+    username: nokwoiayzphkbd
+    password: 8c9addb1f22fa088832974ffd26daa2f58ca1d54d27afae99655ff35f787038d
+    initialization-mode: always
+    initialize: true
+    continue-on-error: true
+    platform: postgresql
+
+  main:
+    allow-bean-definition-overriding: true
+
+  jackson:
+    time-zone: America/Sao_Paulo
+
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+      show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQL9Dialect
+        jdbc:
+          lob.non_contextual_creation: true
+
+app-config:
+
+  application:
+    url: https://b2vn-radar-api.herokuapp.com
+    swagger-url: ${app-config.application.url}/swagger-ui.html
+
+  oauth-clients:
+    b2vn-auth-api:
+      client: b2vn-auth-api-client
+      secret: b2vn-auth-api-secret
+    b2vn-radar-api:
+      client: b2vn-radar-api-client
+      secret: b2vn-radar-api-secret
+
+  services:
+    b2vn-auth-api:
+      url: https://b2vn-auth-api.herokuapp.com
+
+    b2vn-radar-api:
+      url: https://b2vn-radar-api.herokuapp.com
+
+security:
+  oauth2:
+    resource:
+      filter-order: 3
+
+server:
+  port: 8081
+
