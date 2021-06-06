@@ -93,7 +93,7 @@ Token Opaco:
 * Minha aplicação é centralizada, apenas um back-end e um front-end se comunicando, sem serviços distribuídos e sem integrações terceiras.
 * Estou desenvolvendo uma aplicação para acesso interno dos funcionários para definir o que cada um poderá acessar dos sistemas internos da organização.* 
 
-Token * JWT:
+Token JWT:
 
 * Preciso apenas identificar qual usuário está realizando uma determinada ação no sistema nos diferentes serviços.
 * Tenho várias comunicações distribuídas entre serviços.
@@ -161,7 +161,7 @@ Integração-Pagarme-API:
 
 https://integracaopagarme-api.herokuapp.com/
 
-### Gerar token nas aplicações
+### Gerar token nas aplicações via cURL
 
 Para gerar um token na API B2VN-Auth-API, basta executar o seguinte cURL:
 
@@ -201,6 +201,20 @@ curl -i -X POST \
 }' \
  'https://cadeira-livre-cliente-api.herokuapp.com/api/auth/token'
 ```
+
+### Gerar token nas aplicações via Swagger
+
+B2VN Auth API:
+
+https://b2vn-auth-api.herokuapp.com/swagger-ui.html#/auth-controller/generateAccessTokenUsingPOST
+
+Cadeira-Livre-Empresa-API:
+
+https://cadeira-livre-empresa-api.herokuapp.com/swagger-ui.html#/auth-controller/generateAccessTokenUsingPOST
+
+Cadeira-Livre-Cliente-API:
+
+https://cadeira-livre-cliente-api.herokuapp.com/swagger-ui.html/#/Autentica%C3%A7%C3%A3o/autenticarUsuario
 
 ### Autor
 
