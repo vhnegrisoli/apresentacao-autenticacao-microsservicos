@@ -2,7 +2,6 @@ package br.com.b2vnauthapi.b2vnauthapi.config.auth;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -14,7 +13,6 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.token.TokenStore;
-import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
 
 import static br.com.b2vnauthapi.b2vnauthapi.modules.usuario.enums.EPermissao.ADMIN;
 import static br.com.b2vnauthapi.b2vnauthapi.modules.usuario.enums.EPermissao.USER;
@@ -40,11 +38,6 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     private String radarApiClient;
     @Value("${app-config.oauth-clients.b2vn-radar-api.secret}")
     private String radarApiSecret;
-
-    @Bean
-    public TokenStore tokenStore() {
-        return new InMemoryTokenStore();
-    }
 
     @Override
     public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
@@ -81,10 +74,9 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
         endpoints
-            .authenticationManager(authenticationManager)
             .tokenStore(tokenStore)
+            .authenticationManager(authenticationManager)
             .allowedTokenEndpointRequestMethods(HttpMethod.GET, HttpMethod.POST)
-            .tokenEnhancer(new CustomTokenEnhancer())
-            .authenticationManager(authenticationManager);
+            .tokenEnhancer(new CustomTokenEnhancer());
     }
 }

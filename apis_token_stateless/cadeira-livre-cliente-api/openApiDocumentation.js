@@ -25,86 +25,21 @@ module.exports = {
   ],
   tags: [
     {
-      name: "Usuário",
       name: "Autenticação",
-      name: "Cadeira Livre",
-      name: "Empresa",
-      name: "Pagamento",
     },
   ],
   paths: {
-    "/users": {
-      get: {
-        tags: ["Usuário"],
-        description: "Get users",
-        operationId: "getUsers",
-        parameters: [
-          {
-            name: "x-company-id",
-            in: "header",
-            schema: {
-              $ref: "#/components/schemas/companyId",
-            },
-            required: true,
-            description: "Company id where the users work",
-          },
-          {
-            name: "page",
-            in: "query",
-            schema: {
-              type: "integer",
-              default: 1,
-            },
-            required: false,
-          },
-          {
-            name: "orderBy",
-            in: "query",
-            schema: {
-              type: "string",
-              enum: ["asc", "desc"],
-              default: "asc",
-            },
-            required: false,
-          },
-        ],
-        responses: {
-          200: {
-            description: "Users were obtained",
-            content: {
-              "application/json": {
-                schema: {
-                  $ref: "#/components/schemas/Users",
-                },
-              },
-            },
-          },
-          400: {
-            description: "Missing parameters",
-            content: {
-              "application/json": {
-                schema: {
-                  $ref: "#/components/schemas/Error",
-                },
-                example: {
-                  message: "companyId is missing",
-                  internal_code: "missing_parameters",
-                },
-              },
-            },
-          },
-        },
-      },
+    "/api/auth/token": {
       post: {
-        tags: ["Usuário"],
-        description: "Create users",
-        operationId: "createUsers",
+        tags: ["Autenticação"],
+        description: "Gerar token JWT",
+        operationId: "autenticarUsuario",
         parameters: [],
         requestBody: {
           content: {
             "application/json": {
               schema: {
-                $ref: "#/components/schemas/Users",
+                $ref: "#/components/schemas/Auth",
               },
             },
           },
@@ -112,18 +47,21 @@ module.exports = {
         },
         responses: {
           200: {
-            description: "New users were created",
+            description: "O token JWT foi gerado.",
+            content: {
+              "application/json": {
+                schema: {
+                  $ref: "#/components/schemas/AccessToken",
+                },
+              },
+            },
           },
           400: {
-            description: "Invalid parameters",
+            description: "Erro ao gerar Access Token",
             content: {
               "application/json": {
                 schema: {
                   $ref: "#/components/schemas/Error",
-                },
-                example: {
-                  message: "User identificationNumbers 10, 20 already exist",
-                  internal_code: "invalid_parameters",
                 },
               },
             },
@@ -134,69 +72,46 @@ module.exports = {
   },
   components: {
     schemas: {
-      identificationNumber: {
-        type: "integer",
-        description: "User identification number",
-        example: 1234,
-      },
-      username: {
-        type: "string",
-        example: "raparicio",
-      },
-      userType: {
-        type: "string",
-      },
-      companyId: {
-        type: "integer",
-        description: "Company id where the user works",
-        example: 15,
-      },
-      User: {
+      Auth: {
         type: "object",
         properties: {
-          identificationNumber: {
-            $ref: "#/components/schemas/identificationNumber",
+          email: {
+            type: "string",
           },
-          username: {
-            $ref: "#/components/schemas/username",
-          },
-          userType: {
-            $ref: "#/components/schemas/userType",
-          },
-          companyId: {
-            $ref: "#/components/schemas/companyId",
+          senha: {
+            type: "string",
           },
         },
       },
-      Users: {
+      AccessToken: {
         type: "object",
         properties: {
-          users: {
-            type: "array",
-            items: {
-              $ref: "#/components/schemas/User",
-            },
+          token: {
+            type: "string",
+          },
+          status: {
+            type: "number",
           },
         },
       },
       Error: {
         type: "object",
         properties: {
-          message: {
-            type: "string",
+          status: {
+            type: "number",
           },
-          internal_code: {
+          message: {
             type: "string",
           },
         },
       },
     },
-    securitySchemes: {
-      ApiKeyAuth: {
-        type: "apiKey",
-        in: "header",
-        name: "Authorization",
-      },
+  },
+  securitySchemes: {
+    ApiKeyAuth: {
+      type: "apiKey",
+      in: "header",
+      name: "Authorization",
     },
   },
 };

@@ -56,6 +56,9 @@ server:
 
 app-config:
 
+  application:
+    url: http://localhost:8095
+
   queue:
     enviar-notificacao: enviar-notificacao.queue
     autenticar-usuario: autenticar-usuario.queue

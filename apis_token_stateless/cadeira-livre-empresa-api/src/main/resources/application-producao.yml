@@ -38,6 +38,9 @@ spring:
 
 app-config:
 
+  application:
+    url: https://cadeira-livre-empresa-api.herokuapp.com
+
   services:
     integracao-pagarme:
       transacao:

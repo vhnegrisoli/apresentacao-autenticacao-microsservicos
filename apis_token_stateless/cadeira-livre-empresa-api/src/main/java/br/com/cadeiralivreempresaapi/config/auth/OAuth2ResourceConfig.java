@@ -44,7 +44,8 @@ public class OAuth2ResourceConfig extends ResourceServerConfigurerAdapter {
             "**cliente-api**",
             "/api/empresas/cliente-api",
             "/api/empresas/{id}/cliente-api",
-            "/api/localidade/**"
+            "/api/localidade/**",
+            "/api/auth/token"
         };
 
         http
